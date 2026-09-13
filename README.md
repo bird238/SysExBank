@@ -46,9 +46,9 @@ The module uses a 32HP light brushed-aluminum panel with 16 slots divided into t
 
 | Element | Type | Function |
 |---|---|---|
-| **MIDI Output** | `app::MidiDriverChoice` + `app::MidiDeviceChoice` | Selects MIDI driver and target output device (shared across all 16 slots). |
+| **MIDI Output** | Custom `MidiOutChoice` (single-row, click-to-open combined driver+device menu via `app::appendMidiMenu`) | Selects MIDI driver and target output device (shared across all 16 slots). |
 | **S01–S16 Jack** | CV Input | Trigger jack (`dsp::SchmittTrigger`, 0.1 V low / 2.0 V high) to transmit the slot's SysEx message on rising edge. |
-| **Hex Text Field** | Text Input | Editable hex string field (~49mm) containing raw SysEx bytes. |
+| **Hex Text Field** | Text Input | Editable hex string field (~49mm) containing raw SysEx bytes. Clipped to a single line regardless of payload length, so a long hex string never visually wraps into the row below. |
 | **SEND Button** | Pushbutton | Momentary button (`dsp::BooleanTrigger`) to send the SysEx payload manually. |
 | **Status LED** | Green LED | Blinks for 100 ms whenever the slot sends its SysEx message. |
 
@@ -87,4 +87,3 @@ All 16 hex string payloads and the shared MIDI output driver/device selection ar
 - **Pre-parsing**: Text fields are re-parsed into byte caches on UI edits, not on trigger events.
 - **Audio Hot Path**: Audio-thread execution locks the mutex briefly to copy the pre-parsed `std::vector<uint8_t>` and send it to `midi::Output`; no string parsing or dynamic heap allocations occur at audio rate.
 - **Trigger Hysteresis**: Jack inputs use `dsp::SchmittTrigger` (0.1 V / 2.0 V thresholds) to prevent multi-firing.
-

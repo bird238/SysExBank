@@ -35,10 +35,9 @@ static const float CX_FIELD = 15.f;
 static const float CX_BTN   = COL_W - 8.f;
 static const float CX_LED   = COL_W - 3.f;
 static const float FIELD_W  = (CX_BTN - 4.f) - CX_FIELD;
-// Fixed, compact height regardless of the (now much taller) row height -- ui::TextField anchors
-// its text a fixed distance from the top of its own box, so a box much taller than one text line
-// reads as "text sitting too high"; keeping the box close to natural text-line height and
-// centering that box within the row avoids the problem instead of fighting the native widget.
+// Fixed, compact height regardless of the (much taller) row height -- keeps the
+// field looking like a single-line text box rather than an oversized one,
+// vertically centered within its row.
 static const float FIELD_H  = 6.4f;
 
 static const NVGcolor INK = nvgRGB(0x23, 0x26, 0x2a);

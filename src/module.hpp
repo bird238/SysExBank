@@ -154,11 +154,6 @@ struct SysExBank : Module {
         return slots[i].hexString;
     }
 
-    bool getSlotValid(int i) const {
-        std::lock_guard<std::mutex> lock(slotMutex);
-        return slots[i].valid;
-    }
-
     // -----------------------------------------------------------------------
     void process(const ProcessArgs& args) override {
         for (int i = 0; i < NUM_SLOTS; i++) {
